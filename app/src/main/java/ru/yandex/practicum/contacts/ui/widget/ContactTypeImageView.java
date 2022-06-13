@@ -4,12 +4,11 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
-
-import ru.yandex.practicum.contacts.model.ContactType;
 import ru.yandex.practicum.contacts.utils.model.ContactTypeUtils;
 
-public class ContactTypeImageView extends StackImageView<ContactType> {
+import androidx.annotation.NonNull;
+
+public class ContactTypeImageView extends StackImageView<String> {
 
     public ContactTypeImageView(Context context) {
         super(context);
@@ -28,7 +27,7 @@ public class ContactTypeImageView extends StackImageView<ContactType> {
     }
 
     @Override
-    public void loadItem(ContactType item, @NonNull ImageView icon) {
+    public void loadItem(String item, @NonNull ImageView icon) {
         int iconRes = ContactTypeUtils.getIconRes(item);
         icon.setImageResource(iconRes);
     }

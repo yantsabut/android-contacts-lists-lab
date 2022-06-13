@@ -97,7 +97,7 @@ public class MainViewModel extends AndroidViewModel {
         mapContactsAndUpdate();
     }
 
-    public void updateFilterContactTypes(Set<ContactType> filterContactTypes) {
+    public void updateFilterContactTypes(Set<String> filterContactTypes) {
         state.setContactTypes(filterContactTypes);
         updateBadges();
         mapContactsAndUpdate();
@@ -233,7 +233,7 @@ public class MainViewModel extends AndroidViewModel {
         public static class Actions {
             public Action<Boolean> finishActivity = new Action<>(false);
             public Action<SortType> showSortTypeDialog = new Action<>(null);
-            public Action<Set<ContactType>> showFilterContactTypeDialog = new Action<>(Collections.emptySet());
+            public Action<Set<String>> showFilterContactTypeDialog = new Action<>(Collections.emptySet());
 
             @NonNull
             public Actions copy() {

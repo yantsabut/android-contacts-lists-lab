@@ -1,53 +1,53 @@
 package ru.yandex.practicum.contacts.utils.model;
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import ru.yandex.practicum.contacts.R;
 import ru.yandex.practicum.contacts.model.ContactType;
 import ru.yandex.practicum.contacts.presentation.filter.model.FilterContactType;
 import ru.yandex.practicum.contacts.utils.Constants;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 public class ContactTypeUtils {
 
     @DrawableRes
-    public static int getIconRes(@NonNull ContactType type) {
+    public static int getIconRes(@NonNull String type) {
         switch (type) {
-            case TELEGRAM:
+            case ContactType.TELEGRAM:
                 return R.drawable.ic_type_telegram;
-            case WHATS_APP:
+            case ContactType.WHATS_APP:
                 return R.drawable.ic_type_whatsapp;
-            case VIBER:
+            case ContactType.VIBER:
                 return R.drawable.ic_type_viber;
-            case SIGNAL:
+            case ContactType.SIGNAL:
                 return R.drawable.ic_type_signal;
-            case THREEMA:
+            case ContactType.THREEMA:
                 return R.drawable.ic_type_threema;
-            case PHONE:
+            case ContactType.PHONE:
                 return R.drawable.ic_type_phone;
-            case EMAIL:
+            case ContactType.EMAIL:
                 return R.drawable.ic_type_email;
             default:
                 throw new IllegalArgumentException("Not supported type of ContactType");
         }
     }
 
-    public static FilterContactType toFilterContactType(ContactType type) {
+    public static FilterContactType toFilterContactType(String type) {
         switch (type) {
-            case TELEGRAM:
+            case ContactType.TELEGRAM:
                 return FilterContactType.TELEGRAM;
-            case WHATS_APP:
+            case ContactType.WHATS_APP:
                 return FilterContactType.WHATS_APP;
-            case VIBER:
+            case ContactType.VIBER:
                 return FilterContactType.VIBER;
-            case SIGNAL:
+            case ContactType.SIGNAL:
                 return FilterContactType.SIGNAL;
-            case THREEMA:
+            case ContactType.THREEMA:
                 return FilterContactType.THREEMA;
-            case PHONE:
+            case ContactType.PHONE:
                 return FilterContactType.PHONE;
-            case EMAIL:
+            case ContactType.EMAIL:
                 return FilterContactType.EMAIL;
             default:
                 throw new IllegalArgumentException("Not supported ContactType");
@@ -55,7 +55,7 @@ public class ContactTypeUtils {
     }
 
     @Nullable
-    public static ContactType parse(String value) {
+    public static String parse(String value) {
         switch (value) {
             case Constants.StorageType.TELEGRAM:
                 return ContactType.TELEGRAM;

@@ -3,9 +3,6 @@ package ru.yandex.practicum.contacts.presentation.filter;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -16,6 +13,9 @@ import ru.yandex.practicum.contacts.model.ContactType;
 import ru.yandex.practicum.contacts.presentation.base.BaseBottomSheetDialogFragment;
 import ru.yandex.practicum.contacts.presentation.filter.model.FilterContactTypeUi;
 import ru.yandex.practicum.contacts.ui.widget.DividerItemDecoration;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class FilterContactTypeDialogFragment extends BaseBottomSheetDialogFragment<FilterContactTypeViewModel> {
 
@@ -45,7 +45,7 @@ public class FilterContactTypeDialogFragment extends BaseBottomSheetDialogFragme
     }
 
     private void iniViewModel() {
-        final Set<ContactType> defaultFilterContactTypes = from(getArguments());
+        final Set<String> defaultFilterContactTypes = from(getArguments());
         viewModel.init(defaultFilterContactTypes);
     }
 
@@ -62,21 +62,21 @@ public class FilterContactTypeDialogFragment extends BaseBottomSheetDialogFragme
         }
     }
 
-    public static FilterContactTypeDialogFragment newInstance(Set<ContactType> selectedContactTypes) {
+    public static FilterContactTypeDialogFragment newInstance(Set<String> selectedContactTypes) {
         final FilterContactTypeDialogFragment fragment = new FilterContactTypeDialogFragment();
         fragment.setArguments(createBundle(selectedContactTypes));
         return fragment;
     }
 
     @SuppressWarnings("unchecked")
-    public static Set<ContactType> from(@Nullable Bundle bundle) {
+    public static Set<String> from(@Nullable Bundle bundle) {
         if (bundle == null) {
             return Collections.emptySet();
         }
-        return (Set<ContactType>) bundle.getSerializable(ARG_SELECTED_FILTER_CONTACT_TYPE);
+        return (Set<String>) bundle.getSerializable(ARG_SELECTED_FILTER_CONTACT_TYPE);
     }
 
-    private static Bundle createBundle(Set<ContactType> contactTypes) {
+    private static Bundle createBundle(Set<String> contactTypes) {
         final Bundle bundle = new Bundle();
         bundle.putSerializable(ARG_SELECTED_FILTER_CONTACT_TYPE, new HashSet<>(contactTypes));
         return bundle;

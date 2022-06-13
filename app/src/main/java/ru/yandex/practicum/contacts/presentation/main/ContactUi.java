@@ -11,13 +11,13 @@ public class ContactUi {
     private final String name;
     private final String phone;
     private final String photo;
-    private final List<ContactType> types;
+    private final List<String> types;
 
     public ContactUi(
             @NonNull String name,
             @NonNull String phone,
             @NonNull String photo,
-            @NonNull List<ContactType> types
+            @NonNull List<String> types
     ) {
         this.name = name;
         this.phone = phone;
@@ -37,7 +37,7 @@ public class ContactUi {
         return photo;
     }
 
-    public List<ContactType> getTypes() {
+    public List<String> getTypes() {
         return types;
     }
 

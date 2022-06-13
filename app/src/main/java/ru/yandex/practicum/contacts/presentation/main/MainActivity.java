@@ -7,12 +7,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.IdRes;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
-
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
 
@@ -24,13 +18,18 @@ import java.util.Set;
 
 import ru.yandex.practicum.contacts.R;
 import ru.yandex.practicum.contacts.databinding.ActivityMainBinding;
-import ru.yandex.practicum.contacts.model.ContactType;
 import ru.yandex.practicum.contacts.presentation.filter.FilterContactTypeDialogFragment;
-import ru.yandex.practicum.contacts.presentation.sort.SortDialogFragment;
 import ru.yandex.practicum.contacts.presentation.main.model.MenuClick;
+import ru.yandex.practicum.contacts.presentation.sort.SortDialogFragment;
 import ru.yandex.practicum.contacts.presentation.sort.model.SortType;
 import ru.yandex.practicum.contacts.ui.widget.DividerItemDecoration;
 import ru.yandex.practicum.contacts.utils.widget.EditTextUtils;
+
+import androidx.annotation.IdRes;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 @SuppressLint("UnsafeExperimentalUsageError")
 public class MainActivity extends AppCompatActivity {
@@ -56,7 +55,8 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ContactAdapter();
         binding.recycler.setAdapter(adapter);
 
-        final DividerItemDecoration decoration = new DividerItemDecoration(this, R.drawable.item_decoration_72dp, DividerItemDecoration.VERTICAL);
+        final DividerItemDecoration decoration = new DividerItemDecoration(this, R.drawable.item_decoration_72dp,
+                DividerItemDecoration.VERTICAL);
         binding.recycler.addItemDecoration(decoration);
 
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         getSupportFragmentManager().setFragmentResultListener(FilterContactTypeDialogFragment.REQUEST_KEY, this, (requestKey, result) -> {
-            final Set<ContactType> newFilterContactTypes = FilterContactTypeDialogFragment.from(result);
+            final Set<String> newFilterContactTypes = FilterContactTypeDialogFragment.from(result);
             viewModel.updateFilterContactTypes(newFilterContactTypes);
         });
     }
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         SortDialogFragment.newInstance(sortType).show(getSupportFragmentManager(), SORT_TAG);
     }
 
-    private void showFilterContactTypeDialog(Set<ContactType> contactTypes) {
+    private void showFilterContactTypeDialog(Set<String> contactTypes) {
         FilterContactTypeDialogFragment.newInstance(contactTypes).show(getSupportFragmentManager(), FILTER_TAG);
     }
 
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
         if (uiState.actions.showSortTypeDialog.data != null) {
             showSortDialog(uiState.actions.showSortTypeDialog.data);
         }
-        final Set<ContactType> filterContactTypes = uiState.actions.showFilterContactTypeDialog.data;
+        final Set<String> filterContactTypes = uiState.actions.showFilterContactTypeDialog.data;
         if (filterContactTypes != null && filterContactTypes.size() > 0) {
             showFilterContactTypeDialog(filterContactTypes);
         }
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         badges.put(R.id.menu_search, createBadge());
     }
 
-    private void attachBadges(){
+    private void attachBadges() {
         for (Map.Entry<Integer, BadgeDrawable> entry : badges.entrySet()) {
             BadgeUtils.attachBadgeDrawable(entry.getValue(), binding.toolbar, entry.getKey());
         }

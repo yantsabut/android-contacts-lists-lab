@@ -1,7 +1,5 @@
 package ru.yandex.practicum.contacts.presentation.main;
 
-import androidx.annotation.NonNull;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -12,14 +10,17 @@ import ru.yandex.practicum.contacts.model.ContactType;
 import ru.yandex.practicum.contacts.model.MergedContact;
 import ru.yandex.practicum.contacts.presentation.sort.model.SortType;
 
+import androidx.annotation.NonNull;
+
 public class MainState {
 
     private final SortType defaultSortType = SortType.BY_NAME;
-    private final Set<ContactType> defaultContactTypes = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(ContactType.values())));
+    private final Set<String> defaultContactTypes = Collections.unmodifiableSet(
+            new HashSet<>(Arrays.asList(ContactType.getContactTypes())));
 
     private List<MergedContact> allContacts = Collections.emptyList();
     private SortType sortType = defaultSortType;
-    private Set<ContactType> contactTypes = new HashSet<>(defaultContactTypes);
+    private Set<String> contactTypes = new HashSet<>(defaultContactTypes);
     private String query = "";
 
     @NonNull
@@ -46,16 +47,16 @@ public class MainState {
     }
 
     @NonNull
-    public Set<ContactType> getDefaultContactTypes() {
+    public Set<String> getDefaultContactTypes() {
         return defaultContactTypes;
     }
 
     @NonNull
-    public Set<ContactType> getContactTypes() {
+    public Set<String> getContactTypes() {
         return contactTypes;
     }
 
-    public void setContactTypes(@NonNull Set<ContactType> contactTypes) {
+    public void setContactTypes(@NonNull Set<String> contactTypes) {
         this.contactTypes = contactTypes;
     }
 

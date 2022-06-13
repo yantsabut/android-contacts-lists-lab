@@ -26,16 +26,16 @@ public class MergedContactUtils {
                 contact.getEmail().toLowerCase().contains(lowerCaseQuery);
     }
 
-    public static boolean contains(MergedContact contact, Set<ContactType> types) {
+    public static boolean contains(MergedContact contact, Set<String> types) {
         if (types.isEmpty()) {
             return true;
         }
-        final List<ContactType> contactTypes = getContactTypes(contact);
+        final List<String> contactTypes = getContactTypes(contact);
         return !Collections.disjoint(contactTypes, types);
     }
 
-    public static List<ContactType> getContactTypes(MergedContact contact) {
-        final List<ContactType> allTypes = contact.getContactTypes().stream()
+    public static List<String> getContactTypes(MergedContact contact) {
+        final List<String> allTypes = contact.getContactTypes().stream()
                 .map(ContactTypeUtils::parse)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());

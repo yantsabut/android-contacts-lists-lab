@@ -1,14 +1,10 @@
 package ru.yandex.practicum.contacts.presentation.filter;
 
-import androidx.lifecycle.MutableLiveData;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import ru.yandex.practicum.contacts.model.ContactType;
 import ru.yandex.practicum.contacts.presentation.base.BaseBottomSheetViewModel;
@@ -17,16 +13,19 @@ import ru.yandex.practicum.contacts.presentation.filter.model.FilterContactTypeU
 import ru.yandex.practicum.contacts.utils.model.ContactTypeUtils;
 import ru.yandex.practicum.contacts.utils.model.FilterContactTypeUtils;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
+
 public class FilterContactTypeViewModel extends BaseBottomSheetViewModel {
 
     private final UiState uiState = new UiState();
     private final MutableLiveData<List<FilterContactTypeUi>> filterContactTypesLiveDate = new MutableLiveData<>();
     private final MutableLiveData<UiState> uiStateLiveDate = new MutableLiveData<>();
 
-    private Set<ContactType> defaultFilterContactTypes;
-    private Set<ContactType> selectedFilterContactTypes;
+    private Set<String> defaultFilterContactTypes;
+    private Set<String> selectedFilterContactTypes;
 
-    public void init(Set<ContactType> defaultFilterContactTypes) {
+    public void init(Set<String> defaultFilterContactTypes) {
         this.defaultFilterContactTypes = new HashSet<>(defaultFilterContactTypes);
         this.selectedFilterContactTypes = new HashSet<>(defaultFilterContactTypes);
         updateFilterContactTypes();
@@ -61,17 +60,28 @@ public class FilterContactTypeViewModel extends BaseBottomSheetViewModel {
     }
 
     private void updateFilterContactTypes() {
-        final List<FilterContactTypeUi> filterContactTypesUi = new ArrayList<>();
-        final boolean allSelected = selectedFilterContactTypes.size() == ContactType.values().length;
-        filterContactTypesUi.add(new FilterContactTypeUi(FilterContactType.ALL, allSelected));
-        final List<FilterContactTypeUi> collect = Arrays.stream(ContactType.values())
-                .map(contactType -> new FilterContactTypeUi(
-                        ContactTypeUtils.toFilterContactType(contactType),
-                        selectedFilterContactTypes.contains(contactType)
-                ))
-                .collect(Collectors.toList());
-        filterContactTypesUi.addAll(collect);
-        filterContactTypesLiveDate.setValue(filterContactTypesUi);
+        // создайте массив строк. Для инициализации используйте метод ContactType.getContactTypes(),
+        // который должен возвращать список всех доступных источников контактов
+
+        // создайте список типа FilterContactTypeUi и заполните его с помощью цикла forEach
+        // forEach должен бежать по строковому массиву, который вы создали ранее
+
+        // вызовите меотод setValue() у переменной filterContactTypesLiveDate и передайте в качестве аргументы ваш список типа FilterContactTypeUi
+    }
+
+    @NonNull
+    private FilterContactTypeUi createAllSelectedItem(final String[] types) {
+        final boolean allSelected = selectedFilterContactTypes.size() == types.length;
+
+        return new FilterContactTypeUi(FilterContactType.ALL, allSelected);
+    }
+
+    @NonNull
+    private FilterContactTypeUi createFilterContactType(final String type) {
+        return new FilterContactTypeUi(
+                ContactTypeUtils.toFilterContactType(type),
+                selectedFilterContactTypes.contains(type)
+        );
     }
 
     private void updateUiState() {
@@ -81,14 +91,14 @@ public class FilterContactTypeViewModel extends BaseBottomSheetViewModel {
 
     private void updateSelectedContactTypes(FilterContactType type) {
         if (type == FilterContactType.ALL) {
-            if (selectedFilterContactTypes.size() == ContactType.values().length) {
+            if (selectedFilterContactTypes.size() == ContactType.getContactTypes().length) {
                 selectedFilterContactTypes.clear();
             } else {
-                selectedFilterContactTypes.addAll(Arrays.asList(ContactType.values()));
+                selectedFilterContactTypes.addAll(Arrays.asList(ContactType.getContactTypes()));
             }
             return;
         }
-        final ContactType contactType = FilterContactTypeUtils.toContactType(type);
+        final String contactType = FilterContactTypeUtils.toContactType(type);
         if (selectedFilterContactTypes.contains(contactType)) {
             selectedFilterContactTypes.remove(contactType);
         } else {
@@ -97,7 +107,8 @@ public class FilterContactTypeViewModel extends BaseBottomSheetViewModel {
     }
 
     static class UiState {
+
         public boolean isApplyEnable = false;
-        public Set<ContactType> newSelectedContactTypes = Collections.emptySet();
+        public Set<String> newSelectedContactTypes = Collections.emptySet();
     }
 }

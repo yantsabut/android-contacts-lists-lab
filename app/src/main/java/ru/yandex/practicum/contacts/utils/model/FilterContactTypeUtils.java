@@ -1,11 +1,11 @@
 package ru.yandex.practicum.contacts.utils.model;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
-
 import ru.yandex.practicum.contacts.R;
 import ru.yandex.practicum.contacts.model.ContactType;
 import ru.yandex.practicum.contacts.presentation.filter.model.FilterContactType;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 
 public class FilterContactTypeUtils {
 
@@ -34,7 +34,7 @@ public class FilterContactTypeUtils {
     }
 
     @NonNull
-    public static ContactType toContactType(FilterContactType type) {
+    public static String toContactType(FilterContactType type) {
         switch (type) {
             case TELEGRAM:
                 return ContactType.TELEGRAM;
