@@ -27,7 +27,7 @@ public class MergedContactUtils {
     }
 
     public static boolean contains(MergedContact contact, Set<String> types) {
-        if (types.isEmpty() || types.size() == ContactType.values().length) {
+        if (types.isEmpty() || types.size() == ContactType.getContactTypes().length) {
             return true;
         }
         final List<String> contactTypes = getContactTypes(contact);
