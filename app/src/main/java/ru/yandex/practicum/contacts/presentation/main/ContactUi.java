@@ -3,27 +3,30 @@ package ru.yandex.practicum.contacts.presentation.main;
 import androidx.annotation.NonNull;
 
 import java.util.List;
-
+import java.lang.String;
 import ru.yandex.practicum.contacts.model.ContactType;
+import ru.yandex.practicum.contacts.presentation.base.ListDiffInterface;
 
-public class ContactUi {
+public class ContactUi implements ListDiffInterface<ContactUi> {
 
     private final String name;
     private final String phone;
     private final String photo;
-    private final List<String> types;
+    private final List<ContactType> types;
 
     public ContactUi(
             @NonNull String name,
             @NonNull String phone,
             @NonNull String photo,
-            @NonNull List<String> types
+            @NonNull List<ContactType> types
     ) {
         this.name = name;
         this.phone = phone;
         this.photo = photo;
         this.types = types;
     }
+
+
 
     public String getName() {
         return name;
@@ -37,8 +40,15 @@ public class ContactUi {
         return photo;
     }
 
-    public List<String> getTypes() {
-        return types;
+        public List<ContactType> getTypes() {
+            return types;
+        }
+
+
+
+    @Override
+    public boolean theSameAs(ListDiffInterface<ContactUi> listDiffInterface) {
+        return this.hashCode() == ((ContactUi)listDiffInterface).hashCode();
     }
 
     @Override
