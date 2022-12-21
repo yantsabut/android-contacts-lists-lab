@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 
 import androidx.core.content.ContextCompat;
@@ -26,12 +27,12 @@ import ru.yandex.practicum.contacts.presentation.base.BaseListDiffCallback;
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
 
-        private final AsyncListDiffer<ContactUi> differ = new AsyncListDiffer<>(
-                new AdapterListUpdateCallback(this),
-                new AsyncDifferConfig.Builder<>(new BaseListDiffCallback<ContactUi>()).build()
-        );
+    private final AsyncListDiffer<ContactUi> differ = new AsyncListDiffer<>(
+            new AdapterListUpdateCallback(this),
+            new AsyncDifferConfig.Builder<>(new BaseListDiffCallback<ContactUi>()).build()
+    );
 
-        @NonNull
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());

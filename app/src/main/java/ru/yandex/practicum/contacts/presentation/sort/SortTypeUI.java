@@ -6,8 +6,7 @@ import ru.yandex.practicum.contacts.presentation.base.ListDiffInterface;
 import ru.yandex.practicum.contacts.presentation.sort.model.SortType;
 
 
-    public class SortTypeUI implements ListDiffInterface<SortTypeUI> {
-
+public class SortTypeUI implements ListDiffInterface<SortTypeUI> {
 
 
     private final SortType sortType;
@@ -18,20 +17,21 @@ import ru.yandex.practicum.contacts.presentation.sort.model.SortType;
         this.selected = selected;
     }
 
-        public SortType getSortType() {
-            return sortType;
-        }
+    public SortType getSortType() {
+        return sortType;
+    }
 
     public boolean isSelected() {
         return selected;
     }
 
-        @Override
-        public boolean theSameAs(ListDiffInterface<SortTypeUI> listDiffInterface) {
-            return this.getSortType() == ((SortTypeUI)listDiffInterface).getSortType();
-        }
 
-        @Override
+    @Override
+    public boolean theSameAs(SortTypeUI sortTypeUI) {
+        return this.getSortType() == sortTypeUI.getSortType();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
